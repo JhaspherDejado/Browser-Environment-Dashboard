@@ -1,0 +1,207 @@
+<!--
+README: Browser Environment Dashboard
+Student: Jhaspher S. Dejado
+Course: BSIT-2D
+Subject: PF2 - Event Driven Programming
+Instructor: Prof. Arjay F. Abio
+Semester: 2nd Semester 2025–2026
+
+Description:
+This single HTML file demonstrates the use of JavaScript Browser Objects:
+- navigator (browser details)
+- screen (screen properties)
+- document (title and page info)
+- location (URL and redirection)
+- window (resize detection)
+- history (navigation controls)
+
+Features:
+✔ Displays browser and screen information
+✔ Shows current URL, hostname, and page title
+✔ Allows dynamic page title change
+✔ Navigation buttons (reload, redirect, back, forward)
+✔ Background color changes based on screen width
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Browser Environment Dashboard</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: background 0.4s ease;
+}
+
+.wrapper {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.profile-header {
+    background: #372e2e;
+    color: white;
+    padding: 30px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.profile-header h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 30px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.card h2 {
+    margin-bottom: 15px;
+    color: #2a5298;
+}
+
+button {
+    padding: 10px 18px;
+    margin: 8px 5px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #4e73df, #224abe);
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+@media (max-width: 768px) {
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <section class="profile-header">
+        <h1>Browser Environment Dashboard</h1>
+        <div class="profile-grid">
+            <p><strong>Name:</strong> Jhaspher S. Dejado</p>
+            <p><strong>Sex:</strong> Male</p>
+            <p><strong>Address:</strong> Goa, Camarines Sur</p>
+            <p><strong>Course, Year & Section:</strong> BSIT-2D</p>
+            <p><strong>Name of School:</strong> Partido State University</p>
+            <p><strong>Semester & Academic Year:</strong> 2nd Semester 2025–2026</p>
+            <p><strong>Course Code & Title:</strong> PF2 – Event Driven Programming</p>
+            <p><strong>Adviser/Instructor:</strong> Prof. Arjay F. Abio</p>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Browser Information</h2>
+        <div id="browserInfo"></div>
+    </section>
+
+    <section class="card">
+        <h2>Page Information</h2>
+        <p><strong>Current URL:</strong> <span id="url"></span></p>
+        <p><strong>Hostname:</strong> <span id="hostname"></span></p>
+        <p><strong>Page Title:</strong> <span id="pageTitle"></span></p>
+        <button onclick="changeTitle()">Change Page Title</button>
+    </section>
+
+    <section class="card">
+        <h2>Navigation Controls</h2>
+        <button onclick="reloadPage()">Reload</button>
+        <button onclick="redirectPage()">Go to Example.com</button>
+        <button onclick="goBack()">Back</button>
+        <button onclick="goForward()">Forward</button>
+    </section>
+
+</div>
+
+<script>
+const browserInfo = document.getElementById("browserInfo");
+
+browserInfo.innerHTML = `
+    <p><strong>Browser Name:</strong> ${navigator.appName}</p>
+    <p><strong>Browser Version:</strong> ${navigator.appVersion}</p>
+    <p><strong>Platform:</strong> ${navigator.platform}</p>
+    <p><strong>Java Enabled:</strong> ${navigator.javaEnabled()}</p>
+    <p><strong>Screen Resolution:</strong> ${screen.width} x ${screen.height}</p>
+    <p><strong>Available Screen Size:</strong> ${screen.availWidth} x ${screen.availHeight}</p>
+    <p><strong>Color Depth:</strong> ${screen.colorDepth}</p>
+`;
+
+document.getElementById("url").textContent = location.href;
+document.getElementById("hostname").textContent = location.hostname;
+document.getElementById("pageTitle").textContent = document.title;
+
+function changeTitle() {
+    const newTitle = prompt("Enter a new page title:");
+    if (newTitle) {
+        document.title = newTitle;
+        document.getElementById("pageTitle").textContent = newTitle;
+    }
+}
+
+function reloadPage() {
+    location.reload();
+}
+
+function redirectPage() {
+    location.href = "https://www.example.com";
+}
+
+function goBack() {
+    history.back();
+}
+
+function goForward() {
+    history.forward();
+}
+
+function updateBackground() {
+    const width = window.innerWidth;
+
+    if (width < 600) {
+        document.body.style.backgroundColor = "blue";
+    } 
+    else if (width >= 600 && width <= 991) {
+        document.body.style.backgroundColor = "green";
+    } 
+    else {
+        document.body.style.backgroundColor = "orange";
+    }
+}
+
+updateBackground();
+
+window.addEventListener("resize", updateBackground);
+
+</script>
+
+</body>
+</html>
